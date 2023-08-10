@@ -27,9 +27,16 @@ namespace app
     }
     class Friend : RelatedAnimal
     {
-        public string BirthDate;
+        public DateTime BirthDate;
         public string PhoneNumber;
         public Friend(string name, string BirthDate, string PhoneNumber)
+        {
+            this.Name = name;
+            this.BirthDate = DateTime.Parse(BirthDate);
+            this.PhoneNumber = PhoneNumber;
+            this.Id = Guid.NewGuid().ToString();
+        }
+        public Friend(string name, DateTime BirthDate, string PhoneNumber)
         {
             this.Name = name;
             this.BirthDate = BirthDate;
@@ -59,16 +66,22 @@ namespace app
     {
         static void Main(string[] args)
         {
+            var friends = new List<Friend>{
+                new Friend("Linus", "01/01/1970", "707-419-4447"),
+                new Friend("Scott", "10/10/1970", "801-224-7513"),
+                new Friend("Charlie", DateTime.Parse("01/01/1999"), "801-225-8597")
+            };
             var describables = new List<Describable>();
-            describables.Add(new Friend("Linus", "01/01/1970", "707-419-4447"));
-            describables.Add(new Friend("Scott", "10/10/1970", "801-224-7513"));
-            describables.Add(new Friend("Charlie", "01/01/1999", "801-225-8597"));
+            describables.AddRange(friends);
             describables.Add(new Dog("Happy", "Border Collie"));
             describables.Add(new Flight("FL083", "Boeing 747"));
             foreach (var describable in describables)
             {
                 Console.WriteLine(describable.Description());
             }
+            // get all friends younger than 50.
+            var query = "";
+
         }
     }
 }
