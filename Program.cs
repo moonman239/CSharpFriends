@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 namespace app
 {
     interface Describable
@@ -80,8 +81,15 @@ namespace app
                 Console.WriteLine(describable.Description());
             }
             // get all friends younger than 50.
-            var query = "";
-
+            var now = DateTime.Now;
+            var youngFriendsQuery =
+            from friend in friends
+            where (friend.BirthDate > now.AddYears(-50))
+            select friend;
+            foreach (var youngFriend in youngFriendsQuery)
+            {
+                Console.WriteLine(youngFriend.Description());
+            }
         }
     }
 }
