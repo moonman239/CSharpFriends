@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 namespace app
 {
-    abstract class RelatedAnimal
+    interface Describable
+    {
+        public String Description();
+    }
+    abstract class RelatedAnimal : Describable
     {
         public string Name;
         public string Id;
+        public abstract String Description();
     }
     class Dog : RelatedAnimal
     {
@@ -15,7 +20,7 @@ namespace app
             this.Name = name;
             this.Breed = breed;
         }
-        public override String ToString()
+        public override String Description()
         {
             return $"Name: {this.Name}, Breed: {this.Breed}";
         }
@@ -31,24 +36,38 @@ namespace app
             this.PhoneNumber = PhoneNumber;
             this.Id = Guid.NewGuid().ToString();
         }
-        public override String ToString()
+        public override string Description()
         {
             return $"Name: {this.Name}, Phone Number: {this.PhoneNumber}, Birth Date: {this.BirthDate}";
+        }
+    }
+    class Flight : Describable
+    {
+        public string FlightNumber;
+        public string AircraftType;
+        public Flight(string FlightNumber, string AircraftType)
+        {
+            this.FlightNumber = FlightNumber;
+            this.AircraftType = AircraftType;
+        }
+        public String Description()
+        {
+            return $"Flight number: {this.FlightNumber}, Aircraft Type: {this.AircraftType}";
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            var friends = new List<Friend>();
-            friends.Add(new Friend("Linus", "01/01/1970", "707-419-4447"));
-            friends.Add(new Friend("Scott", "10/10/1970", "801-224-7513"));
-            friends.Add(new Friend("Charlie", "01/01/1999", "801-225-8597"));
-            var dog = new Dog("Happy", "Border Collie");
-            Console.WriteLine(dog.ToString());
-            foreach (var friend in friends)
+            var describables = new List<Describable>();
+            describables.Add(new Friend("Linus", "01/01/1970", "707-419-4447"));
+            describables.Add(new Friend("Scott", "10/10/1970", "801-224-7513"));
+            describables.Add(new Friend("Charlie", "01/01/1999", "801-225-8597"));
+            describables.Add(new Dog("Happy", "Border Collie"));
+            describables.Add(new Flight("FL083", "Boeing 747"));
+            foreach (var describable in describables)
             {
-                Console.WriteLine(friend.ToString());
+                Console.WriteLine(describable.Description());
             }
         }
     }
