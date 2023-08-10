@@ -15,6 +15,10 @@ namespace app
             this.PhoneNumber = PhoneNumber;
             this.Id = Guid.NewGuid().ToString();
         }
+        public String ToString()
+        {
+            return $"Name: {this.Name}, Phone Number: {this.PhoneNumber}, Birth Date: {this.BirthDate}";
+        }
     }
     class Program
     {
@@ -26,9 +30,7 @@ namespace app
             friends.Add(new Friend("Charlie", "01/01/1999", "801-225-8597"));
             foreach (var friend in friends)
             {
-                Console.WriteLine(friend.Name);
-                Console.WriteLine(friend.BirthDate);
-                Console.WriteLine(friend.PhoneNumber);
+                Console.WriteLine(friend.ToString());
             }
         }
     }
